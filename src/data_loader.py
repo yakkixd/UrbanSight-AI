@@ -13,5 +13,5 @@ def load_districts(path):
     return df
 
 if __name__ == "__main__":
-    p = path if path else "data/district.shp"
+    p = "data/district.shp"
     load_districts(p)

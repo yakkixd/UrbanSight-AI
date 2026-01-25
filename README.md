@@ -31,7 +31,7 @@ UrbanSight AI is a geospatial analysis tool designed to monitor urban sprawl and
 
 2. The application will open in your default browser.
 
-> **Note**: This project requires a shapefile for district boundaries (`district.shp`). Ensure this file is available and the path is correctly configured in `src/app.py`.
+> **Note**: This project requires a shapefile for district boundaries (`district.shp`). Please place the shapefile components (`.shp`, `.shx`, `.dbf`, etc.) in the `data/` directory.
 
 ## License
 
