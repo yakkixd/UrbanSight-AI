@@ -12,3 +12,5 @@ streamlit-folium
 pandas
 numpy
 scipy
+altair
+fpdf

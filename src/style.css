@@ -1,0 +1,153 @@
+/* Global Settings */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --bg-color: #050505;
+    --card-bg: rgba(255, 255, 255, 0.05);
+    --sidebar-bg: #000000;
+    --accent-color: #2997ff; /* Apple Blue */
+    --text-primary: #f5f5f7;
+    --text-secondary: #86868b;
+    --success: #30d158;
+    --warning: #ff9f0a;
+    --danger: #ff453a;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+}
+
+/* Streamlit Overrides */
+.stApp {
+    background-color: var(--bg-color);
+}
+
+/* Sidebar */
+section[data-testid="stSidebar"] {
+    background-color: var(--sidebar-bg);
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+section[data-testid="stSidebar"] .block-container {
+    padding-top: 2rem;
+}
+
+/* Metric Cards */
+.metric-card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    margin-bottom: 12px;
+}
+
+.metric-label {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 500;
+}
+
+.metric-value {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-top: 4px;
+}
+
+.metric-sub {
+    font-size: 0.85rem;
+    margin-top: 4px;
+    font-weight: 500;
+}
+
+/* Nav Pill */
+.nav-pill {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 100px;
+    padding: 12px 30px;
+    width: fit-content;
+    margin: 0 auto 20px auto;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+}
+
+.nav-item {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.nav-item.active {
+    color: var(--text-primary);
+}
+
+.nav-item:hover {
+    color: var(--text-primary);
+}
+
+/* Headers */
+h1, h2, h3 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+}
+
+/* Info Box */
+.info-box {
+    background: rgba(41, 151, 255, 0.1);
+    border-left: 3px solid var(--accent-color);
+    padding: 15px;
+    border-radius: 4px;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    margin: 10px 0;
+}
+
+/* Action Button */
+.stButton button {
+    background-color: var(--text-primary) !important;
+    color: var(--bg-color) !important;
+    border-radius: 8px;
+    font-weight: 600;
+    border: none;
+    padding: 10px 20px;
+    transition: all 0.2s;
+}
+
+.stButton button:hover {
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+    transform: scale(1.02);
+}
+
+/* Custom Explained Card */
+.explained-card {
+    background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+    border-radius: 16px;
+    padding: 24px;
+    border: 1px solid rgba(255,255,255,0.08);
+}
+
+.explained-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.explained-text {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
