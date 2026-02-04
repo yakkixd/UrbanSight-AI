@@ -30,19 +30,22 @@ def load_css(file_name):
     except FileNotFoundError:
         st.error(f"CSS file not found: {file_name}")
 
-load_css("urban_sprawl_project/src/style.css")
+load_css(os.path.join(os.path.dirname(os.path.abspath(__file__)), "style.css"))
 
 # --- Constants & Paths ---
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(PROJECT_ROOT, 'data')
-SHAPEFILE_PATH = "d:/AIKosh/district.shp"
-STATS_PATH = "d:/AIKosh/urban_sprawl_project/src/district_stats.csv"
+SHAPEFILE_PATH = os.path.normpath(os.path.join(PROJECT_ROOT, '..', 'district.shp'))
+STATS_PATH = os.path.join(PROJECT_ROOT, 'src', 'district_stats.csv')
 
 # --- Data Loading ---
 @st.cache_data
 def get_data():
     try:
         gdf = load_districts(SHAPEFILE_PATH)
+        if gdf is None:
+            raise ValueError(f"Could not load shapefile from {SHAPEFILE_PATH}")
+
         gdf['geometry'] = gdf['geometry'].simplify(0.002)
         
         if os.path.exists(STATS_PATH):
@@ -61,8 +64,12 @@ def get_data():
 
 try:
     gdf = get_data()
+    if gdf.empty:
+        st.error("No data available. Application cannot start.")
+        st.stop()
     district_list = sorted(gdf['d_name'].dropna().unique())
-except:
+except Exception as e:
+    st.error(f"Initialization Error: {e}")
     st.stop()
 
 # --- Helper Functions (Interpretation) ---
@@ -136,8 +143,12 @@ with st.sidebar:
         with st.spinner("Acquiring Satellite Feed..."):
             try:
                 res = do_processing(selected_district, SHAPEFILE_PATH)
-                st.session_state.scan_result = res
-                st.success("Scan Complete")
+                if res is None:
+                    st.warning("No satellite imagery found for this region.")
+                    st.session_state.scan_result = None
+                else:
+                    st.session_state.scan_result = res
+                    st.success("Scan Complete")
             except Exception as e:
                 st.error(f"Scan Failed: {e}")
 
@@ -321,6 +332,7 @@ with tab2:
             ax1.imshow(ndvi, cmap='RdYlGn', vmin=-1, vmax=1)
             ax1.axis('off')
             st.pyplot(fig1)
+            plt.close(fig1)
             
         with s2:
             st.caption("NDBI (Built-up Areas)")
@@ -329,6 +341,7 @@ with tab2:
             ax2.imshow(ndbi, cmap='gray', vmin=-1, vmax=1)
             ax2.axis('off')
             st.pyplot(fig2)
+            plt.close(fig2)
             
         with s3:
             st.caption("Detected High-Risk Sprawl")
@@ -339,6 +352,7 @@ with tab2:
             ax3.imshow(mask, cmap='Reds', vmin=0, vmax=1)
             ax3.axis('off')
             st.pyplot(fig3)
+            plt.close(fig3)
             
         st.divider()
 
